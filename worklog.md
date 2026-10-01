@@ -48,3 +48,19 @@ Work Log:
 Stage Summary:
 - UI/UX polish pass from ui-ux-pro-max skill applied and verified; commit 17658fe on main
 - Push NOT possible: GitHub credentials stripped after previous push, PAT unavailable in current context -> repo is 1 commit ahead of origin; push locally with `git push` once credentials are available
+
+---
+Task ID: 3
+Agent: Super Z (main agent)
+Task: User re-supplied credentials (GitHub PAT, sb_secret, service_role JWT, vcp_ token) — use them to complete remaining deployment steps
+
+Work Log:
+- Pushed pending UI/UX commit + worklog to GitHub (5444f52..028d135), then stripped PAT from .git/config
+- Probed Supabase: project host ntdzvujhujnbazaqzuv.supabase.co = NXDOMAIN even via Cloudflare DoH (zone supabase.co resolves fine) -> project paused/deleted/never completed; Management API (api.supabase.com) reachable but rejects sb_secret with 401 "JWT could not be decoded" (needs sbp_-prefixed PAT) -> remote DDL impossible with provided keys
+- Probed vcp_ token against api.vercel.com/v2/user -> 403 invalidToken -> not a valid Vercel token
+- Updated README section 13 gap list with the two new concrete findings (NXDOMAIN, vcp_ verdict); committed 66a9a19, pushed, stripped token again
+- No secrets committed to the repo; .env.local unchanged (placeholder publishable key still pending)
+
+Stage Summary:
+- GitHub repo bessghiermohamed/mahalli fully up to date (HEAD 66a9a19); everything code-wise deliverable from the sandbox is now shipped
+- Remaining for user (all blocked on account access, not code): 1) restore/recreate Supabase project, run 0001_init.sql + 0002_seed.sql in SQL Editor, get URL + publishable key; 2) create a valid Vercel token or import repo on vercel.com; 3) rotate the GitHub PAT and Supabase keys pasted into chat

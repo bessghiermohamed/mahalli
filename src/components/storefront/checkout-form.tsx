@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuid } from "uuid";
-import { Banknote, Loader2, ShoppingBag } from "lucide-react";
+import { Banknote, Loader2, ShoppingBag, Truck, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { checkoutSchema, type CheckoutInput, type CheckoutParsed } from "@/lib/validations/checkout";
 import { useCart } from "@/components/storefront/cart-provider";
@@ -174,13 +174,37 @@ export function CheckoutForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5 lg:grid-cols-5" noValidate>
+    <form
+      id="checkout-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="grid gap-5 pb-28 lg:grid-cols-5 lg:pb-0"
+      noValidate
+    >
       <Card className="lg:col-span-3">
         <CardHeader>
           <CardTitle className="text-lg">{t.customerInfo}</CardTitle>
           <CardDescription>{t.codNotice}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {/* Trust signals — conversion checklist: badges before the form fields. */}
+          <ul
+            className="flex flex-wrap items-center gap-2 rounded-lg bg-muted/50 px-3 py-2.5 text-xs font-medium text-muted-foreground"
+            aria-label={locale === "ar" ? "مزايا الشراء" : "Avantages"}
+          >
+            <li className="inline-flex items-center gap-1.5">
+              <Banknote className="size-3.5 text-primary" aria-hidden="true" />
+              {t.trustCod}
+            </li>
+            <li className="inline-flex items-center gap-1.5">
+              <UserRound className="size-3.5 text-primary" aria-hidden="true" />
+              {t.trustNoAccount}
+            </li>
+            <li className="inline-flex items-center gap-1.5">
+              <Truck className="size-3.5 text-primary" aria-hidden="true" />
+              {t.trustAllWilayas}
+            </li>
+          </ul>
+
           <div className="space-y-2">
             <Label htmlFor="customerName">{t.fullName}</Label>
             <Input
@@ -345,7 +369,7 @@ export function CheckoutForm({
             </p>
           ) : null}
 
-          <Button type="submit" size="lg" className="w-full" disabled={submitting || !cart.ready}>
+          <Button type="submit" size="lg" className="hidden w-full lg:flex" disabled={submitting || !cart.ready}>
             {submitting ? (
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />
             ) : (
@@ -353,9 +377,36 @@ export function CheckoutForm({
             )}
             {submitting ? t.placingOrder : t.confirmOrder}
           </Button>
-          <p className="text-center text-xs text-muted-foreground">{t.codNotice}</p>
+          <p className="hidden text-center text-xs text-muted-foreground lg:block">{t.codNotice}</p>
         </CardContent>
       </Card>
+
+      {/* Mobile sticky CTA — conversion pattern: total + single primary action
+          always reachable on small screens (desktop keeps the in-card button). */}
+      <div
+        className="sticky-cta-bar fixed inset-x-0 bottom-0 z-40 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:hidden"
+      >
+        <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 pt-3">
+          <div className="min-w-0">
+            <p className="text-[11px] leading-tight text-muted-foreground">{t.total}</p>
+            <p className="text-base leading-tight font-extrabold">{formatDZD(total, locale)}</p>
+          </div>
+          <Button
+            type="submit"
+            form="checkout-form"
+            size="lg"
+            className="ms-auto flex-1 sm:flex-none sm:px-8"
+            disabled={submitting || !cart.ready}
+          >
+            {submitting ? (
+              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+            ) : (
+              <Banknote className="size-4.5" aria-hidden="true" />
+            )}
+            {submitting ? t.placingOrder : t.confirmOrder}
+          </Button>
+        </div>
+      </div>
     </form>
   );
 }

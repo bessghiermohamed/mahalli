@@ -56,7 +56,7 @@ export function SuccessView({ locale }: { locale: Locale }) {
   return (
     <Card className="mx-auto max-w-lg">
       <CardContent className="space-y-5 p-6 text-center">
-        <CheckCircle2 className="mx-auto size-14 text-emerald-500" aria-hidden="true" />
+        <CheckCircle2 className="animate-success-pop mx-auto size-14 text-emerald-500" aria-hidden="true" />
         <div>
           <h2 className="text-xl font-extrabold">{t.orderPlaced}</h2>
           <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
@@ -140,7 +140,7 @@ export function SuccessFallback({ locale }: { locale: Locale }) {
   return (
     <Card className="mx-auto max-w-lg">
       <CardContent className="space-y-4 p-6 text-center">
-        <CheckCircle2 className="mx-auto size-14 text-emerald-500" aria-hidden="true" />
+        <CheckCircle2 className="animate-success-pop mx-auto size-14 text-emerald-500" aria-hidden="true" />
         <h2 className="text-xl font-extrabold">{t.orderPlaced}</h2>
         <p className="text-sm text-muted-foreground">{t.orderPlacedHint}</p>
         <Button asChild variant="outline">

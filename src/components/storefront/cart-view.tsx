@@ -73,23 +73,23 @@ export function CartView({ storeSlug, locale }: { storeSlug: string; locale: Loc
                 <div className="flex items-center rounded-lg border">
                   <button
                     type="button"
-                    className="flex size-8 items-center justify-center text-muted-foreground hover:text-foreground"
+                    className="flex size-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground active:text-primary"
                     onClick={() => cart.setQty(item.productId, item.qty - 1)}
                     aria-label={`تقليل كمية ${item.name}`}
                   >
-                    <Minus className="size-3.5" aria-hidden="true" />
+                    <Minus className="size-4" aria-hidden="true" />
                   </button>
                   <span className="w-8 text-center text-sm font-bold" aria-live="polite">
                     {item.qty}
                   </span>
                   <button
                     type="button"
-                    className="flex size-8 items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-40"
+                    className="flex size-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground active:text-primary disabled:opacity-40"
                     onClick={() => cart.setQty(item.productId, item.qty + 1)}
                     disabled={item.stock !== null && item.qty >= item.stock}
                     aria-label={`زيادة كمية ${item.name}`}
                   >
-                    <Plus className="size-3.5" aria-hidden="true" />
+                    <Plus className="size-4" aria-hidden="true" />
                   </button>
                 </div>
                 <button

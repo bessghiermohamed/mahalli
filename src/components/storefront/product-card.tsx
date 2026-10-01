@@ -20,7 +20,7 @@ export function ProductCard({
   return (
     <Link
       href={`/${storeSlug}/p/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary"
+      className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-[box-shadow,translate] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary"
       aria-label={product.name}
     >
       <div className="img-fallback relative aspect-square w-full overflow-hidden">

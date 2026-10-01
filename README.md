@@ -182,8 +182,9 @@ bun run start        # تشغيل نسخة الإنتاج محليًا
 ### خطوات ما بقي يتطلب بياناتك (تعذّر تنفيذها آليًا من بيئة التطوير)
 
 - **تشغيل الترحيلات:** مفاتيح Supabase المتوفرة هي مفاتيح Data API فقط (`secret key`/`service_role`) ولا تصلح لتنفيذ DDL عن بُعد (واجهة الإدارة Management API تتطلب Personal Access Token بصيغة `sbp_…`). طبّق `0001_init.sql` و`0002_seed.sql` من SQL Editor كما في القسم 8.
+- **مشروع Supabase نفسه:** اختبار DNS العام (2026-10-01) أظهر أن `ntdzvujhujnbazaqzuv.supabase.co` غير موجود إطلاقًا (NXDOMAIN) بينما النطاق الأصل `supabase.co` يعمل — أي أن المشروع إما موقوف مؤقتًا (paused) أو محذوف أو لم يكتمل إنشاؤه. استعده/أنشئه من لوحة Supabase ثم طبّق الترحيلات واستخرج `URL` و`publishable key` الجديدين.
 - **استبدال مفتاح `.env.local`:** المفتاح الحالي في `.env.local` سرّي وليس publishable — أنشئ/استعمل المفتاح العام في بيئة الإنتاج.
-- **النشر على Vercel:** يتطلب ربط حسابك على Vercel واستيراد المستودع (لا يوجد توكن Vercel متاح).
+- **النشر على Vercel:** التوكن المتاح (البادئة `vcp_…`) اختُبر برمجيًا ضد `api.vercel.com` وأعاد `403 invalidToken` — فهو ليس توكن Vercel صالحًا. اربط حسابك على Vercel واستورد المستودع، أو أنشئ توكنًا من [vercel.com/account/tokens](https://vercel.com/account/tokens).
 
 ## 14. تكامل شركات التوصيل مستقبلًا
 
